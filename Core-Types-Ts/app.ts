@@ -1,28 +1,23 @@
-/* Objects in Typescript */
+/* ----------Union Types------------ */
 
-const person = /*: { name: string; age: number }*/ {
-  name: "Harshad",
-  age: 24,
-  hobbies: ["Sports", "Reading"],
-};
-console.log(person.name);
-console.log(person.age);
+/* There are cases when we dont know which data will be recieved exctly , so we use union types, 
+what union type basically is we pass types to the function and TS infers it from the recieved 
+data and appropriatly executes the commands.  */
 
-for (const hobby of person.hobbies) {
-  console.log(hobby.toUpperCase());
-  //console.log(hobby.map()); !!Error Cannot use map() on string thrown by TS.
+function combine(input1: number | string, input2: number | string) {
+  let result;
+
+  //let result = input1 + input2;// TS complains because it infers that the "+" operater is not allowed
+  //work around run-time check
+  if (typeof input1 === "number" && typeof input2 === "number") {
+    result = input1 + input2;
+  } else {
+    result = input1.toString() + input2.toString();
+  }
+  return result;
 }
 
-let favouriteHobbies: string[];
-favouriteHobbies = ["Sports"];
-
-/* If your hover over the object person you'll notice that it looks similar to the javascript 
-objects we know but if you look closely you'll see that the object has a semicolon(;) after each property,
- & it is not key-value pair but it is key-type pair.*/
-
-/*If you just annotate the person object with (:object) you would just let typescript know that 
- this is just an object and if you try to access the properties of that object typescript will 
- through an error that it doesnt exist. So to use those properties we annotate in the above way. */
-
-/* If you hover over the person's object you'll see that typescript describes hobbies property as follows
- hobbies: string[] it simply means that it an array of data of type string. */
+const combineAges = combine(30, 26);
+console.log(combineAges);
+const combineNames = combine("Harshad", " Naik");
+console.log(combineNames);
